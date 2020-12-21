@@ -24,22 +24,30 @@ export default function App() {
     },
   ]);
 
-  const playerQtyChange = (index, qty) => {
-    // update qty
-    const playersTemp = [...players];
-
-    playersTemp[index].qty = qty;
-    setPlayers(playersTemp);
+  playerQtyChange = (index, qty) => {
+    // update players
+    const playersUpdated = updateArray(players, index, "qty", qty);
+    setPlayers(playersUpdated);
 
     // update total
-    const total = playersTemp
-      .map((player) => player.qty)
-      .reduce((qty, result) => {
-        result += qty;
+    const totalUpdated = sumArray(playersUpdated.map((player) => player.qty));
+    setTotal(totalUpdated);
+  };
 
-        return result;
-      }, 0);
-    setTotal(total);
+  updateArray = (array, index, key, value) => {
+    const arrayTemp = [...array];
+
+    arrayTemp[index][key] = value;
+
+    return arrayTemp;
+  };
+
+  sumArray = (array = []) => {
+    return array.reduce((qty, result) => {
+      result += qty;
+
+      return result;
+    }, 0);
   };
 
   return (
@@ -50,7 +58,9 @@ export default function App() {
         <View style={styles.summary}>
           <Text style={styles.summaryTitle}>Total Score</Text>
 
-          <Text style={styles.summaryQty}>{total}</Text>
+          <Text style={styles.summaryQty} testID="totalScore">
+            {total}
+          </Text>
         </View>
 
         <View style={styles.players}>

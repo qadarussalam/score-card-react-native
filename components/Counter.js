@@ -2,10 +2,12 @@ import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import NumericInput from "react-native-numeric-input";
 
-export default function Counter({ title, qty, qtyChange }) {
+export default function Counter({ title = "Player", qty = 0, qtyChange }) {
   return (
     <View style={styles.player}>
-      <Text style={styles.playerTitle}>{title}</Text>
+      <Text style={styles.playerTitle} testID="title">
+        {title}
+      </Text>
 
       <NumericInput
         rounded
